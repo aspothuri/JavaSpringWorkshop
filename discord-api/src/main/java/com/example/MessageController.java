@@ -7,6 +7,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @RestController
 @RequestMapping("/messages")
+@CrossOrigin(origins = "http://localhost:3000")
 public class MessageController {
 
     // Store messages in memory using a Map
@@ -25,13 +26,15 @@ public class MessageController {
         Map<String, Long> wordCounts = new HashMap<>();
         messageStore.forEach((username, messages) -> {
             long count = messages.stream()
-                                 .filter(message -> message.toLowerCase().contains(word.toLowerCase()))
-                                 .count();
+                    // Split the message into words and check for exact matches
+                    .flatMap(message -> Arrays.stream(message.split("\\s+"))) // Split by spaces
+                    .filter(w -> w.equalsIgnoreCase(word)) // Match whole words
+                    .count();
             if (count > 0) {
                 wordCounts.put(username, count);
             }
         });
         return wordCounts;
     }
-}
 
+}
