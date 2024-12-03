@@ -27,8 +27,8 @@ public class MessageController {
         messageStore.forEach((username, messages) -> {
             long count = messages.stream()
                     // Split the message into words and check for exact matches
-                    .flatMap(message -> Arrays.stream(message.split("\\s+"))) // Split by spaces
-                    .filter(w -> w.equalsIgnoreCase(word)) // Match whole words
+                    .flatMap(message -> Arrays.stream(message.split("\\s+"))) 
+                    .filter(w -> w.equalsIgnoreCase(word)) 
                     .count();
             if (count > 0) {
                 wordCounts.put(username, count);
