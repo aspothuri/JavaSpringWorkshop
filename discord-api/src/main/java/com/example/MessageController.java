@@ -13,6 +13,7 @@ public class MessageController {
     // Store messages in memory using a Map
     private final Map<String, List<String>> messageStore = new ConcurrentHashMap<>();
 
+    // Creating endpoints
     @PostMapping
     public String saveMessage(@RequestParam String username, @RequestParam String content) {
         System.out.println("Username: " + username + " | Message: " + content);
